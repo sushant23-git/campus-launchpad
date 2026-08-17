@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import api from "@/lib/api";
+import Sidebar from "../../components/Sidebar";
+import api from "../../lib/api";
 import {
   Users, CheckCircle, Award, Send, Star, FileText, Link as LinkIcon, RefreshCw, Eye
 } from "lucide-react";

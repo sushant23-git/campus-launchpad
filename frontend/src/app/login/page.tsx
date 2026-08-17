@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Lock, Mail, User as UserIcon, RefreshCw, KeyRound, Award, BookOpen } from "lucide-react";
-import api from "@/lib/api";
+import api from "../../lib/api";
 
 export default function LoginPage() {
   const router = useRouter();

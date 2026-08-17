@@ -17,7 +17,7 @@ import {
   User as UserIcon,
   RefreshCw
 } from "lucide-react";
-import api from "@/lib/api";
+import api from "../lib/api";
 
 export default function Sidebar() {
   const pathname = usePathname();

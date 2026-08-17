@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import api from "@/lib/api";
+import Sidebar from "../../components/Sidebar";
+import api from "../../lib/api";
 import {
   Flame, Award, BookOpen, AlertCircle, Sparkles, CheckCircle, Github, Bell, ArrowUpRight
 } from "lucide-react";

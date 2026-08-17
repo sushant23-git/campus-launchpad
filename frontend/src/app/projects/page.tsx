@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import api from "@/lib/api";
+import Sidebar from "../../components/Sidebar";
+import api from "../../lib/api";
 import {
   FolderKanban, Award, Clock, CheckCircle, Plus, Eye, Send, Link as LinkIcon, AlertCircle, RefreshCw
 } from "lucide-react";
