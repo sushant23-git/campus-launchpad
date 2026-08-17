@@ -1,0 +1,66 @@
+# Campus Launchpad Implementation Tasks
+
+- [x] **Phase 1: Repository Structure & Base Config**
+    - [x] Create folder structure for `backend/`, `frontend/`, `infra/`, and `docs/`
+    - [x] Add root configuration files (`.env.example`, `.gitignore`, `README.md`)
+    - [x] Setup base Docker and Docker Compose files
+- [/] **Phase 2: Database & Core Models**
+    - [x] Setup SQLAlchemy database session, base model
+    - [x] Define user, profile, cohort, and peer group models
+    - [x] Define week, module, content, and task models
+    - [x] Define submission, version, quiz, and attempt models
+    - [x] Define scoring, progression, XP, projects, and activities models
+    - [/] Setup Alembic migration environment and generate initial migration
+- [x] **Phase 3: Secure Authentication & Authorization**
+    - [x] Implement password hashing and JWT access/refresh token rotation
+    - [x] Implement endpoints: Register, Login, Refresh, Logout, Me, Forgot/Reset Password
+    - [x] Implement Admin TOTP 2FA setup and verification
+    - [x] Add Role-Based Access Control (RBAC) dependencies for endpoints
+- [x] **Phase 4: Curriculum Engine & Lock System**
+    - [x] Create week and module CRUD APIs
+    - [x] Implement unlock check rules (start dates, previous weeks, overrides)
+    - [x] Track learning content heartbeats and screen durations
+- [x] **Phase 5: Tasks, Submissions & Version Control**
+    - [x] Create tasks list APIs (mandatory and optional challenges)
+    - [x] Implement secure file upload storage provider
+    - [x] Implement version-controlled submission workflow
+    - [x] Create mentor submission review APIs
+- [x] **Phase 6: Quiz Engine & Automated Grading**
+    - [x] Implement quiz attempts flow (autosave intermediate answers)
+    - [x] Implement automated grading service for MCQs, MSQs, and True/False questions
+    - [x] Implement manual evaluation routes for open-ended questions
+- [x] **Phase 7: XP, Progress, Consistency & Ranking Engines**
+    - [x] Implement XP transaction service (with anti-farming checks)
+    - [x] Implement progress metrics engine (compiles weighted completion)
+    - [x] Implement consistency checker (tracks streaks and bonus XP)
+    - [x] Implement ranking engine (calculates overall scores and snapshot movements)
+- [x] **Phase 8: Peer Grouping & Verification**
+    - [x] Implement peer group assignment logic (manual, skill/interest balanced)
+    - [x] Create peer activity submissions and peer review verifications
+- [x] **Phase 9: Domain Exploration & Anonymous Projects**
+    - [x] Implement Week 5–6 domain exploration and challenge tracking
+    - [x] Create anonymous project statements, teams, and milestone reviews
+    - [x] Set up GitHub activity integration mock and real clients
+- [x] **Phase 10: Event Auditing, Notifications & Analytics**
+    - [x] Implement central event logging system (`activity_events`)
+    - [x] Create in-app notification center
+    - [x] Build admin analytics metrics compiler and CSV exports
+- [x] **Phase 11: AI progress insights & At-Risk Detection**
+    - [x] Implement deterministic at-risk rules engine
+    - [x] Build AI insights generation service using metric aggregates
+- [x] **Phase 12: Next.js Frontend Development**
+    - [x] Setup Next.js boilerplate, design system, and tailwind configurations
+    - [x] Build authentication pages (login, registration, OTP validation)
+    - [x] Build student dashboards, curriculum navigation, and submission panels
+    - [x] Build leaderboards, peer groups, and admin control panels
+    - [x] Build Tasks details, version histories, and submission forms
+    - [x] Build Quiz player (autosave answers, timed attempt UI)
+    - [x] Build Projects page (team selection, milestones overview)
+    - [x] Build Leaderboard (rank transitions, privacy filters)
+    - [x] Build Admin & Mentor consoles (submissions queue, cohort overview, risk flags)
+- [x] **Phase 13: Testing, Verification & Walkthrough**
+    - [x] Implement unit tests for XP, Progress, and Ranking engines
+    - [x] Implement integration tests for auth, lock rules, and submissions
+    - [x] Build database seeding system with full 12-week data
+    - [x] Run linting, TypeScript compilation checks, and type-checks
+    - [x] Write system documentation files in `docs/`
