@@ -1,18 +1,18 @@
 # Campus Launchpad — Production Deployment Guide
 
-This guide details how to deploy the **Campus Launchpad** platform online. 
+This guide details how to deploy the **Campus Launchpad** platform online.
 
-For a robust production environment, we split the architecture:
-1. **Database**: A hosted, persistent PostgreSQL instance (via **Neon** or **Supabase**).
-2. **Backend API**: A FastAPI service deployed on **Render** or **Railway**.
-3. **Frontend Client**: A Next.js application deployed on **Vercel**.
+We support two deployment options:
+1. **Option A: Vercel Unified Monorepo (Easiest & 100% Free)**: Deploys both the Next.js frontend and the FastAPI backend to the same Vercel project using Vercel Serverless Functions.
+2. **Option B: Split Deployment**: Deploys the Next.js frontend to Vercel and the FastAPI backend as a persistent service on Render or Railway.
+
+Both options connect to a hosted production PostgreSQL instance (such as **Neon** or **Supabase**).
 
 ---
 
 ## 1. Prerequisites
 - A [GitHub](https://github.com) account.
 - A [Vercel](https://vercel.com) account.
-- A [Render](https://render.com) or [Railway](https://railway.app) account.
 - A [Neon](https://neon.tech) or [Supabase](https://supabase.com) account (for hosted PostgreSQL).
 
 ---
@@ -35,85 +35,71 @@ SQLite files are local and ephemeral. When deploying to serverless platforms, yo
 
 ---
 
-## 3. Step 2: Deploy the FastAPI Backend to Render
-Render connects directly to your GitHub repository and redeploys automatically on git pushes.
+## 3. Option A: Unified Monorepo Deployment on Vercel (Easiest)
 
-### 3.1 Prepare Codebase for Monorepo Deployment
-If your code is in a single git repository (monorepo), Render allows you to specify a **Root Directory** (`backend`).
+By using the provided `vercel.json` in the root of the project, Vercel will build both the Next.js client and the Python Serverless API function under the same domain.
 
-### 3.2 Create Web Service on Render
+### 3.1 Setup Vercel Project
+1. Open the [Vercel Dashboard](https://vercel.com) and click **Add New > Project**.
+2. Select your connected GitHub repository.
+3. Keep the **Root Directory** as the repository root (do **NOT** change it to `frontend`).
+4. Vercel will automatically detect `vercel.json` and configure the build pipelines for both Next.js and Python.
+
+### 3.2 Set Environment Variables
+In the Vercel dashboard project settings, add the following variables under **Environment Variables**:
+
+| Key | Value | Notes |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | `postgresql+asyncpg://...` | Your Neon/Supabase database connection string |
+| `JWT_SECRET_KEY` | `your-secure-random-key` | Generate using `openssl rand -hex 32` |
+| `JWT_REFRESH_SECRET_KEY` | `another-secure-random-key` | Generate using `openssl rand -hex 32` |
+| `TOTP_ISSUER` | `CampusLaunchpad` | Issuer name for Google Authenticator |
+| `NEXT_PUBLIC_API_URL` | `/api/v1` | **Relative URL path** (allows frontend and backend to communicate natively under the same domain) |
+| `AI_PROVIDER_KEY` | `mock` or your key | Set to `mock` if AI modules are bypassed |
+
+5. Click **Deploy**. Vercel will build the frontend, package the python dependencies, and expose your platform live (e.g. `https://campus-launchpad.vercel.app`).
+
+---
+
+## 4. Option B: Split Deployment (Vercel Frontend + Render Backend)
+
+If you prefer to run FastAPI as a persistent background process (e.g., to handle long-running transactions or WebSocket streams without serverless timeouts):
+
+### 4.1 Deploy Backend to Render
 1. Sign in to [Render](https://render.com).
 2. Click **New +** and select **Web Service**.
-3. Connect your GitHub repository containing the Campus Launchpad project.
-4. Configure the Web Service settings:
+3. Connect your repository.
+4. Configure service settings:
    - **Name**: `campus-launchpad-backend`
    - **Environment**: `Python`
-   - **Region**: Select the closest region to your users.
-   - **Branch**: `main` (or your active branch)
    - **Root Directory**: `backend`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - **Instance Type**: `Free` (or higher)
+5. Under **Environment**, add:
+   - `DATABASE_URL` (Neon Postgres url)
+   - `JWT_SECRET_KEY` & `JWT_REFRESH_SECRET_KEY`
+   - `CORS_ORIGINS`: Set to your deployed Vercel URL (e.g. `https://campus-launchpad.vercel.app`)
 
-### 3.3 Set Environment Variables
-In the Render dashboard, navigate to **Environment** and add the following keys:
-
-| Key | Value | Notes |
-| :--- | :--- | :--- |
-| `DATABASE_URL` | `postgresql+asyncpg://...` | Your modified Neon/Supabase connection string |
-| `JWT_SECRET_KEY` | `your-long-secure-random-string` | Generate using `openssl rand -hex 32` |
-| `JWT_REFRESH_SECRET_KEY` | `another-secure-random-string` | Generate using `openssl rand -hex 32` |
-| `TOTP_ISSUER` | `CampusLaunchpad` | Name shown on user 2FA screens |
-| `CORS_ORIGINS` | `https://your-frontend.vercel.app` | (We will update this after deploying to Vercel) |
-| `AI_PROVIDER_KEY` | `mock` or `your-actual-gemini-key` | Set to `mock` if LLM service is not configured |
-
-### 3.4 Seed the Database
-Once the Render Web Service completes building and is **Live**:
-1. Open Render's **Shell** tab for the Web Service.
-2. Run migrations to initialize the tables:
-   ```bash
-   alembic upgrade head
-   ```
-3. Run the seeder to populate cohort parameters:
-   ```bash
-   python app/database/seed.py
-   ```
-
-Copy your deployed Render URL (e.g. `https://campus-launchpad-backend.onrender.com`).
+### 4.2 Deploy Frontend to Vercel
+1. Create a project in Vercel.
+2. Select your repository, and set **Root Directory** to `frontend`.
+3. Add the environment variable:
+   - `NEXT_PUBLIC_API_URL`: `https://campus-launchpad-backend.onrender.com/api/v1`
+4. Deploy the project.
 
 ---
 
-## 4. Step 3: Deploy the Next.js Frontend to Vercel
-Vercel is optimized for Next.js out-of-the-box.
+## 5. Running Database Migrations & Seeding in Production
 
-### 4.1 Import Project to Vercel
-1. Go to [Vercel](https://vercel.com) and click **Add New > Project**.
-2. Select your connected GitHub repository.
-3. Configure the Project settings:
-   - **Framework Preset**: `Next.js`
-   - **Root Directory**: Select `frontend` (crucial for monorepos).
-   - **Build & Development Settings**: Keep defaults.
+To populate your live PostgreSQL database with cohorts, weekly timelines, domains, and timed quiz checkpoint questions:
 
-### 4.2 Set Environment Variables
-Expand the **Environment Variables** accordion and add:
-
-| Key | Value | Notes |
-| :--- | :--- | :--- |
-| `NEXT_PUBLIC_API_URL` | `https://your-backend.onrender.com/api/v1` | Your deployed Render URL + `/api/v1` prefix |
-
-4. Click **Deploy**. Vercel will compile and host your Next.js application, outputting a public URL (e.g., `https://campus-launchpad-frontend.vercel.app`).
-
----
-
-## 5. Step 4: Finalize CORS Policies
-1. Copy your public Vercel URL.
-2. Return to the **Render Dashboard** of your backend web service.
-3. Update the `CORS_ORIGINS` environment variable to include your new Vercel URL:
-   ```env
-   CORS_ORIGINS=https://your-frontend.vercel.app,http://localhost:3000
+1. Open your terminal locally on your machine.
+2. Ensure you have the `DATABASE_URL` pointing to your production database in your local `.env` file (temporarily, or pass it directly in the command line).
+3. Execute Alembic migrations to construct the database schema on your hosted database:
+   ```bash
+   $env:DATABASE_URL="postgresql+asyncpg://..."; $env:PYTHONPATH="backend"; uv run alembic upgrade head
    ```
-4. Save changes. Render will automatically redeploy the service with the new settings.
-
-Your Campus Launchpad platform is now fully deployed and live!
-- **Frontend Dashboard**: `https://your-frontend.vercel.app`
-- **Backend API Docs**: `https://your-backend.onrender.com/docs`
+4. Execute the seeder script to populate default data:
+   ```bash
+   $env:DATABASE_URL="postgresql+asyncpg://..."; $env:PYTHONPATH="backend"; uv run python backend/app/database/seed.py
+   ```
