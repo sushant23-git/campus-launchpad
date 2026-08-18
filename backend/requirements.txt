@@ -17,3 +17,7 @@ pytest==8.1.1
 pytest-asyncio==0.23.5
 python-docx==1.2.0
 pypdf==4.1.0
+bcrypt==3.2.2
+aiosqlite==0.22.1
+email-validator==2.3.0
+
