@@ -139,8 +139,8 @@ export default function LoginPage() {
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 text-slate-100">
       {/* Brand Header */}
       <div className="flex items-center gap-2 mb-8">
-        <div className="bg-blue-600 p-2.5 rounded-xl text-white font-bold text-xl">CL</div>
-        <span className="font-extrabold text-2xl tracking-wider">Campus Launchpad</span>
+        <div className="bg-blue-600 p-2.5 rounded-xl text-white font-bold text-xl">NX</div>
+        <span className="font-extrabold text-2xl tracking-wider">NOXUS</span>
       </div>
 
       {/* Main card wrapper */}

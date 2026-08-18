@@ -21,8 +21,8 @@ export default function LandingPage() {
       {/* Header */}
       <header className="max-w-7xl mx-auto px-6 py-6 w-full flex justify-between items-center border-b border-slate-900">
         <div className="flex items-center gap-2">
-          <div className="bg-blue-600 p-2 rounded-lg text-white font-bold">CL</div>
-          <span className="font-extrabold text-xl tracking-wider">Campus Launchpad</span>
+          <div className="bg-blue-600 p-2 rounded-lg text-white font-bold">NX</div>
+          <span className="font-extrabold text-xl tracking-wider">NOXUS</span>
         </div>
         <Link
           href="/login"
@@ -41,7 +41,7 @@ export default function LandingPage() {
           Accelerate Your Engineering Potential.
         </h1>
         <p className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl leading-relaxed">
-          An integrated collaboration and student tracking platform. Bridge technical skill gaps through cohort challenges, peer grouping, and anonymous team building.
+          An integrated collaboration, discovery, and student development platform. Bridge technical skill gaps through active missions, peer evaluations, and domain exploration.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-20">
@@ -58,30 +58,30 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full text-left">
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
             <BookOpen className="w-8 h-8 text-blue-500 mb-4" />
-            <h3 className="font-bold text-lg text-slate-200 mb-2">Curriculum</h3>
+            <h3 className="font-bold text-lg text-slate-200 mb-2">Roadmap</h3>
             <p className="text-sm text-slate-400">Lock-unlock mechanisms ensuring students master foundational concepts sequentially.</p>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
             <Code className="w-8 h-8 text-indigo-500 mb-4" />
-            <h3 className="font-bold text-lg text-slate-200 mb-2">XP Ledger</h3>
-            <p className="text-sm text-slate-400">Double-entry audit trails logging active contributions and streak milestones.</p>
+            <h3 className="font-bold text-lg text-slate-200 mb-2">Domain Hub</h3>
+            <p className="text-sm text-slate-400">A curated gallery of engineering tracks with depth tracking for career readiness.</p>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
             <Users className="w-8 h-8 text-emerald-500 mb-4" />
-            <h3 className="font-bold text-lg text-slate-200 mb-2">Peer Grouping</h3>
-            <p className="text-sm text-slate-400">Reciprocal confirmation check-ins and balanced team assignment matching.</p>
+            <h3 className="font-bold text-lg text-slate-200 mb-2">Collaborate</h3>
+            <p className="text-sm text-slate-400">Reciprocal review checks, technical blogs, and balanced team Capstone matching.</p>
           </div>
           <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
             <Trophy className="w-8 h-8 text-amber-500 mb-4" />
-            <h3 className="font-bold text-lg text-slate-200 mb-2">Leaderboards</h3>
-            <p className="text-sm text-slate-400">Deterministic metrics scoring without external subjective AI overrides.</p>
+            <h3 className="font-bold text-lg text-slate-200 mb-2">Measure</h3>
+            <p className="text-sm text-slate-400">High-fidelity metrics distinguishing personal skill progress from peer rank.</p>
           </div>
         </div>
       </main>
 
       {/* Footer */}
       <footer className="w-full text-center py-8 text-slate-500 text-sm border-t border-slate-900 bg-slate-950">
-        © 2026 Campus Launchpad Cohort System. All rights reserved.
+        © 2026 NOXUS Bootcamp System. All rights reserved.
       </footer>
     </div>
   );

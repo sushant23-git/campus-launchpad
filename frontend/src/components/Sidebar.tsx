@@ -15,7 +15,9 @@ import {
   LogOut,
   Flame,
   User as UserIcon,
-  RefreshCw
+  RefreshCw,
+  Grid,
+  FileText
 } from "lucide-react";
 import api from "../lib/api";
 
@@ -69,10 +71,12 @@ export default function Sidebar() {
 
   const links = [
     { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-    { name: "Curriculum", href: "/curriculum", icon: BookOpen },
-    { name: "Assessments", href: "/quizzes", icon: Award },
-    { name: "Peer Group", href: "/peers", icon: Users },
-    { name: "Project Teams", href: "/projects", icon: FolderKanban },
+    { name: "Domain Hub", href: "/domains", icon: Grid },
+    { name: "12-Week Roadmap", href: "/curriculum", icon: BookOpen },
+    { name: "Missions & Quizzes", href: "/quizzes", icon: Award },
+    { name: "Collaborate & Review", href: "/peers", icon: Users },
+    { name: "Project Capstone", href: "/projects", icon: FolderKanban },
+    { name: "Blogs Hub", href: "/blogs", icon: FileText },
     { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
   ];
 
@@ -83,8 +87,8 @@ export default function Sidebar() {
       <div className="p-6">
         {/* Brand */}
         <div className="flex items-center gap-2 mb-8">
-          <div className="bg-blue-600 p-2 rounded-lg text-white font-bold text-lg">CL</div>
-          <span className="font-extrabold text-lg tracking-wider text-slate-100">Campus Launchpad</span>
+          <div className="bg-blue-600 p-2 rounded-lg text-white font-bold text-lg">NX</div>
+          <span className="font-extrabold text-lg tracking-wider text-slate-100">NOXUS</span>
         </div>
 
         {/* User Info Capsule */}
